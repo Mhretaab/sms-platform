@@ -1,7 +1,7 @@
 package com.haud.smsgateway.customer.controller;
 
-import com.haud.smsgateway.customer.model.Customer;
 import com.haud.smsgateway.customer.domain.CustomerDto;
+import com.haud.smsgateway.customer.model.Customer;
 import com.haud.smsgateway.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,23 @@ public class CustomerRestController {
 		this.customerService = customerService;
 	}
 
-	@GetMapping("/{uuid}")
+	@GetMapping("/uuid/{uuid}")
 	public ResponseEntity<Mono<Customer>> getCustomerByUuid(@PathVariable("uuid") String uuid) {
 		Mono<Customer> customer = this.customerService.findCustomerByUuid(uuid);
+		HttpStatus status = customer != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+		return new ResponseEntity<>(customer, status);
+	}
+
+	@GetMapping("/phonenumber/{phoneNumber}")
+	public ResponseEntity<Mono<Customer>> getCustomerByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+		Mono<Customer> customer = this.customerService.findCustomerByPhoneNumber(phoneNumber);
+		HttpStatus status = customer != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+		return new ResponseEntity<>(customer, status);
+	}
+
+	@GetMapping("/email/{email}")
+	public ResponseEntity<Mono<Customer>> getCustomerByEmail(@PathVariable("email") String email) {
+		Mono<Customer> customer = this.customerService.findCustomerByEmail(email);
 		HttpStatus status = customer != null ? HttpStatus.OK : HttpStatus.NOT_FOUND;
 		return new ResponseEntity<>(customer, status);
 	}
@@ -38,7 +52,7 @@ public class CustomerRestController {
 		return this.customerService.findAllCustomers();
 	}
 
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public Mono<Customer> createCustomer(@RequestBody CustomerDto customerDto) throws Exception {
 		logger.info("creating customer: {}", customerDto);

@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @Configuration
 @EnableReactiveMongoRepositories(basePackages = {"com.haud.smsgateway"})
 public class MongoConfig extends AbstractReactiveMongoConfiguration {
+	private static final Logger logger = LoggerFactory.getLogger(MongoConfig.class);
 
 	@Value("${db.url}")
 	private String dburl;
@@ -27,6 +28,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
 	@Override
 	public MongoClient reactiveMongoClient() {
+		logger.info("Creating mongo client");
 		return MongoClients.create(new ConnectionString(String.format("mongodb://%s:%s", dburl, dbport)));
 	}
 
@@ -42,6 +44,7 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
 	@Bean
 	public ReactiveMongoTemplate reactiveMongoTemplate() {
+		logger.info("Creating reactive mongo template");
 		return new ReactiveMongoTemplate(reactiveMongoClient(), getDatabaseName());
 	}
 }

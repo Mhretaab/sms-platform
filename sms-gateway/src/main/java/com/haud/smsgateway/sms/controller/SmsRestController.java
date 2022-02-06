@@ -23,7 +23,7 @@ public class SmsRestController {
 
 	@PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public void sendSms(@RequestBody Sms sms){
+	public void sendSms(@RequestBody Sms sms) throws Exception{
 		logger.info("Sending sms");
 		this.smsService.sendSms(sms);
 	}

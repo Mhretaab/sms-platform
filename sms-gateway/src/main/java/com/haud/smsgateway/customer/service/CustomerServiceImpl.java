@@ -2,6 +2,7 @@ package com.haud.smsgateway.customer.service;
 
 import com.haud.smsgateway.customer.domain.CustomerDto;
 import com.haud.smsgateway.customer.exception.CustomerInvalidFieldException;
+import com.haud.smsgateway.customer.exception.CustomerNotFoundException;
 import com.haud.smsgateway.customer.model.Customer;
 import com.haud.smsgateway.customer.repo.CustomerRepository;
 import com.haud.smsgateway.utils.StringUtils;
@@ -27,17 +28,17 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Mono<Customer> findCustomerByUuid(String uuid) {
-		return this.customerRepository.findByUuid(uuid);
+		return this.customerRepository.findByUuid(Mono.just(uuid));
 	}
 
 	@Override
 	public Mono<Customer> findCustomerByEmail(String email) {
-		return this.customerRepository.findByEmail(email);
+		return this.customerRepository.findByEmail(Mono.just(email));
 	}
 
 	@Override
 	public Mono<Customer> findCustomerByPhoneNumber(String phoneNumber) {
-		return this.customerRepository.findByPhoneNumber(phoneNumber);
+		return this.customerRepository.findByPhoneNumber(Mono.just(phoneNumber));
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Mono<Customer>createCustomer(CustomerDto customerDto) throws Exception {
+	public Mono<Customer> createCustomer(CustomerDto customerDto) {
 		logger.info("Creating customer: {}", customerDto);
 
 		if (StringUtils.isNullOrEmpty(customerDto.getEmail()))

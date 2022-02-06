@@ -17,19 +17,20 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 public class SmsServiceImpl implements SmsService {
 	private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
 
 	private final CustomerService customerService;
-	private final RabbitTemplate template;
+	private final RabbitTemplate rabbitTemplate;
 	private final TopicExchange topic;
 
 	@Autowired
-	public SmsServiceImpl(CustomerService customerService, RabbitTemplate template, TopicExchange topic) {
+	public SmsServiceImpl(CustomerService customerService, RabbitTemplate rabbitTemplate, TopicExchange topic) {
 		this.customerService = customerService;
-		this.template = template;
+		this.rabbitTemplate = rabbitTemplate;
 		this.topic = topic;
 	}
 
@@ -44,27 +45,24 @@ public class SmsServiceImpl implements SmsService {
 		if (StringUtils.isNullOrEmpty(sms.getText()))
 			throw new SmsFieldInvalidException("Text");
 
-		this.customerService.findCustomerByPhoneNumber(sms.getSenderPhone()).subscribe(
-				customer -> {
-					if (customer == null) {
-						throw new CustomerNotFoundException("Customer Not Found");
-					} else {
-						final MessageProperties messageProperties = new MessageProperties();
-						messageProperties.setContentType(MessageProperties.CONTENT_TYPE_JSON);
+		this.customerService.findCustomerByPhoneNumber(sms.getSenderPhone())
+				.switchIfEmpty(Mono.error(new CustomerNotFoundException("Customer Not Found")))
+				.subscribe(customer -> {
 
-						try {
-							String smsString = Constants.OBJECT_MAPPER.writeValueAsString(sms);
-							final Message amqpMessage = MessageBuilder.withBody(smsString.getBytes())
-									.andProperties(messageProperties).build();
-							template.convertAndSend(topic.getName(), RabbitMQConfig.SPAM_FILTER_BINDING_KEY,
-									amqpMessage);
-							template.convertAndSend(topic.getName(), RabbitMQConfig.CHARGING_MODULE_BINDING_KEY,
-									amqpMessage);
-						} catch (JsonProcessingException e) {
-							logger.info("sendSms(): {}", e.getMessage());
-						}
+					final MessageProperties messageProperties = new MessageProperties();
+					messageProperties.setContentType(MessageProperties.CONTENT_TYPE_JSON);
+
+					try {
+						String smsString = Constants.OBJECT_MAPPER.writeValueAsString(sms);
+						final Message amqpMessage = MessageBuilder.withBody(smsString.getBytes())
+								.andProperties(messageProperties).build();
+						rabbitTemplate.convertAndSend(topic.getName(), RabbitMQConfig.SPAM_FILTER_BINDING_KEY,
+								amqpMessage);
+						rabbitTemplate.convertAndSend(topic.getName(), RabbitMQConfig.CHARGING_MODULE_BINDING_KEY,
+								amqpMessage);
+					} catch (JsonProcessingException e) {
+						logger.info("sendSms(): {}", e.getMessage());
 					}
-				}
-		);
+				});
 	}
 }
