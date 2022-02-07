@@ -105,7 +105,7 @@ Run the following command from the root directory of sms-gateway:
 
 `./mvnw test`
 
-Testing with Curl
+Testing with cURL
 ============
 
 Creating Customer:
