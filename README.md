@@ -21,7 +21,7 @@ Overall System Design
 
 ![System-Design] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipP047cTPo7MwwfUfLUDHOHYDytEAC940IbqQdvv)
 
-Overall System Design
+Spam Filter Design
 ============
 
 ![Speam-Filter] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipOE_ejDYjKlghjeB3EpkLn07E1xn36L5YuUwaQ0)
