@@ -19,7 +19,7 @@ Since the whole platform is designed based on reactive approach, it is highly sc
 Overall System Design
 ============
 
-![System-Design] (https://photos.app.goo.gl/6bbuPk7ZVT5i1oDz8)
+![System-Design] (https://photos.google.com/share/AF1QipO4gwJKRFB8EkuHLR7FcQFuC_SBAlOysO41OuLrCHiLr-3OCVYyt9nt0yW9fG7Yfw/photo/AF1QipPpD7cfklCBnoq7UasuhEF03DVHiSMFvxR1GPn4?key=QVhDWjJGd0hxcVJjaHI2Q0x6ZFFmclp1WkhyTTZ3)
 
 Spam Filter Design
 ============
