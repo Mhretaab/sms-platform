@@ -14,6 +14,18 @@ The spam filter service consumes messages from rabbitmq queue. then filters out 
 Finally, the message is sent to the delivery server. To do so, spam filter makes use of Spring Integration Java DSL. Message is consumed from rabbitmq inbound
 channel adapter, then transformed, filtered and using service activator sent to delivery server.
 
+Since the whole platform is designed based on reactive approach, it is highly scalable. Moreover, it is designed to handle 100,000 requests per second.
+
+Overall System Design
+============
+
+! [System-Design] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipP047cTPo7MwwfUfLUDHOHYDytEAC940IbqQdvv)
+
+Overall System Design
+============
+
+! [Speam-Filter] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipOE_ejDYjKlghjeB3EpkLn07E1xn36L5YuUwaQ0)
+
 Features Done in SMS-Gateway Service
 ============
 * Registering Customers
