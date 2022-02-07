@@ -19,12 +19,12 @@ Since the whole platform is designed based on reactive approach, it is highly sc
 Overall System Design
 ============
 
-! [System-Design] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipP047cTPo7MwwfUfLUDHOHYDytEAC940IbqQdvv)
+![System-Design] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipP047cTPo7MwwfUfLUDHOHYDytEAC940IbqQdvv)
 
 Overall System Design
 ============
 
-! [Speam-Filter] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipOE_ejDYjKlghjeB3EpkLn07E1xn36L5YuUwaQ0)
+![Speam-Filter] (https://photos.google.com/u/1/search/_tra_/photo/AF1QipOE_ejDYjKlghjeB3EpkLn07E1xn36L5YuUwaQ0)
 
 Features Done in SMS-Gateway Service
 ============
