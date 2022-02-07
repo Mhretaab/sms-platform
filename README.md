@@ -22,6 +22,13 @@ Overall System Design
 ![system_design](https://user-images.githubusercontent.com/5934044/152754295-f9ed675a-1ffc-4c50-8f75-75540c6c3163.png)
 
 
+Spam Filter Java DSL
+============
+
+![spam_filter_2](https://user-images.githubusercontent.com/5934044/152755761-f85ebe09-c736-45ef-b52f-03b899fc054c.png)
+
+
+
 Features Done in SMS-Gateway Service
 ============
 * Registering Customers
